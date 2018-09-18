@@ -16,34 +16,26 @@ __author__ = 'SRP'
 即在所有可能的输入实例中，只要有一个实例使得算法不满足稳定性要求，则该排序算法就是不稳定的。
 ajax'''
 
+import random,time,functools
 
-import random,time
 list = [15,2,5,9,8,3,4,52,45,98,67,50,35,14,27,21,5]
 list2 = [random.randrange(10000) for i in range(10000)]
 
+
+count = 0
 def quick_sort(list):
+    '''快排'''
     if list==[]:
         return []
     else:
         pivot = list[0]
         low = quick_sort([x for x in list[1:] if x<pivot])
         high = quick_sort([x for x in list[1:] if x>=pivot])
+        global count
+        count += 1
         return low + [pivot] + high
 
-print(quick_sort(list))
-
-# def qsort(seq):
-#     if seq==[]:
-#         return []
-#     else:
-#         pivot=seq[0]
-#         lesser=qsort([x for x in seq[1:] if x<pivot])
-#         greater=qsort([x for x in seq[1:] if x>=pivot])
-#         return lesser+[pivot]+greater
-#
-# print(qsort(list))
-
-
+print(quick_sort(list2),count)
 
 
 # n = len(list)

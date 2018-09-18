@@ -9,26 +9,39 @@ __author__ = 'SRP'
 按其关键字大小插入到前面已经排好序的子序列中的适当位置，直到全部记录插入完成为止。'''
 
 import random
+import time
+import functools
+
 list2 = [random.randrange(10000) for i in range(10000)]
 list = [15,2,5,9,8,3,4,52,45,98,67,50,35,14,27,21,5]
 
+def run_time():
+    def decorator(func):
+        @functools.wraps(func)
+        def wrapper(*args,**kwargs):
+            t1 = time.time()
+            func(*args,**kwargs)
+            t2 = time.time()
+            print('<%s>用时:%s' %(func.__doc__,t2-t1))
+        return wrapper
+    return decorator
 
-# def insert_sort(list):
-#     count = 0
-#     n = len(list)
-#     for i in range(1,n):
-#         tmp = list[i]
-#         position = i
-#         while position > 0 and list[position-1] > tmp:
-#             list[position] = list[position-1]
-#             list[position-1] = tmp
-#             position -= 1
-#             count +=1
-#
-#     return list,count
-#
-# newlist,count = insert_sort(list)
-# print(newlist,count)
+@run_time()
+def insert_sort(list):
+    '''插入排序'''
+    count = 0
+    n = len(list)
+    for i in range(1,n):
+        tmp = list[i]
+        position = i
+        while position > 0 and list[position-1] > tmp:
+            list[position],list[position-1] = list[position-1],tmp
+            position -= 1
+            count += 1
+    print('排序后:{0} \n排序次数:{1}'.format(list,count))
+
+insert_sort(list)
+
 
 
 

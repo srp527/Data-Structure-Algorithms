@@ -14,11 +14,26 @@ __author__ = 'SRP'
 
 '''
 
-import random,time
+import random,time,functools
+
 list2 = [random.randrange(10000) for i in range(10000)]
 list = [15,2,5,9,8,3,4,52,45,98,67,50,35,14,27,21,5]
 
+def run_time():
+    def decorator(func):
+        @functools.wraps(func)
+        def wrapper(*args,**kwargs):
+            t1 = time.time()
+            func(*args,**kwargs)
+            t2 = time.time()
+            print('<%s>用时:%s' %(func.__doc__,t2-t1))
+        return wrapper
+    return decorator
+
+@run_time()
 def shell_sort(list):
+    '''希尔排序'''
+    count = 0
     n = len(list)
     step = n // 2
     while step > 0:
@@ -26,6 +41,7 @@ def shell_sort(list):
             if i+step < n :
                 if list[i] > list[i+step]:
                     list[i],list[i+step] = list[i+step],list[i]
+            count += 1
         step = step // 2
     #-----------------------------#
     for i in range(n):
@@ -34,9 +50,11 @@ def shell_sort(list):
         while postion > 0 and list[postion-1] > num:
             list[postion],list[postion-1] = list[postion-1],num
             postion -= 1
+            count += 1
+    print('排序后:{0} \n排序次数:{1}'.format(list, count))
 
-newlist = shell_sort(list)
-print(list)
+shell_sort(list2)
+
 
 
 
